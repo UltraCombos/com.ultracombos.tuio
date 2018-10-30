@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 namespace UltraCombos
 {
+    [ExecuteInEditMode]
     public class TuioVisualizer : MonoBehaviour
     {
         [SerializeField]
         Texture2D texture;
 
-        RectTransform template;
+        RectTransform template = null;
         Dictionary<int, RectTransform> inputs;
 
         [SerializeField, Header("Debug")]
@@ -19,18 +20,43 @@ namespace UltraCombos
 
         private void Start()
         {
-            var go = new GameObject("template");
-            template = go.AddComponent<RectTransform>();
-            template.SetParent(transform);
-            var img = go.AddComponent<RawImage>();
-            img.texture = texture;
-            go.SetActive(false);
 
-            inputs = new Dictionary<int, RectTransform>();
         }
 
         private void Update()
         {
+            var rt = transform as RectTransform;
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.zero;
+            rt.anchoredPosition = Vector2.zero;
+            rt.sizeDelta = Vector2.zero;
+
+            var group = GetComponent<CanvasGroup>();
+            if (group == null)
+            {
+                group = gameObject.AddComponent<CanvasGroup>();
+                group.interactable = group.blocksRaycasts = false;
+            }
+
+            if (Application.isPlaying == false)
+                return;
+
+            if (template == null)
+            {
+                var go = new GameObject("template");
+                template = go.AddComponent<RectTransform>();
+                template.SetParent(transform);
+                var img = go.AddComponent<RawImage>();
+                img.texture = texture;
+                img.color = Color.HSVToRGB(0.02f, 0.9f, 0.9f);
+                go.SetActive(false);
+            }
+
+            if (inputs == null)
+            {
+                inputs = new Dictionary<int, RectTransform>();
+            }
+
             foreach (var id in inputs.Keys)
             {
                 inputs[id].gameObject.SetActive(false);
@@ -68,7 +94,7 @@ namespace UltraCombos
             var rt = transform.root.GetComponentInChildren<Canvas>().transform as RectTransform;
             position = position / Camera.main.pixelRect.size * rt.sizeDelta;
 
-            inputs[id].anchoredPosition = position;
+            inputs[id].anchoredPosition3D = position;
             inputs[id].gameObject.SetActive(true);
         }
     }
