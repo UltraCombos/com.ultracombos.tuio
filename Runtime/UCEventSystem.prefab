@@ -88,8 +88,6 @@ MonoBehaviour:
   blobFilters:
   - {fileID: 114872970294644716}
   objectFilters: []
-  TouchFps: 0
-  ObjectFps: 0
   TuioPort: 3333
   AddTuioObjectEvent:
     m_PersistentCalls:

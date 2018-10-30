@@ -36,13 +36,11 @@ public class TUIOManager : MonoBehaviour, TuioListener
 		}
 	}
 
-    [SerializeField]
-    TuioFilter[] blobFilters;
-    [SerializeField]
-    TuioFilter[] objectFilters;
+    public List<TuioFilter> blobFilters;
+    public List<TuioFilter> objectFilters;
 
-    public float TouchFps = 0;
-    public float ObjectFps = 0;
+    public float TouchFps { get; private set; }
+    public float ObjectFps { get; private set; }
 
     public Dictionary<int, Touch> touches
     {
