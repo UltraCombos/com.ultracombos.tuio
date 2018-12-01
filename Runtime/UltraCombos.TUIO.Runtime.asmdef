@@ -1,6 +1,8 @@
 {
     "name": "UltraCombos.TUIO.Runtime",
-    "references": [],
+    "references": [
+		"com.ultracombos.osc"
+	],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
