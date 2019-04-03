@@ -1,10 +1,14 @@
 {
     "name": "UltraCombos.TUIO.Runtime",
     "references": [
-		"com.ultracombos.osc"
-	],
+        "UltraCombos.OSC.Runtime"
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
 }
