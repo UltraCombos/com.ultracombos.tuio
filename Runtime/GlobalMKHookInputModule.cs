@@ -10,6 +10,8 @@ namespace UltraCombos
     {
         public bool forceProcessMouseEvent = true;
 
+        public Dictionary<int, PointerEventData> GetPointerDatas { get { return m_PointerData; } }
+
         protected override void Awake()
         {
             base.Awake();
