@@ -11,8 +11,13 @@ public class TuioDefaultFilter : TuioFilter
 
     public void Start()
     {
-        roi.width = Camera.main.pixelWidth;
-        roi.height = Camera.main.pixelHeight;
+        if (Camera.main == null)
+            Debug.LogWarning("Main Camera is null");
+        else
+        {
+            roi.width = Camera.main.pixelWidth;
+            roi.height = Camera.main.pixelHeight;
+        }
     }
 
     protected void FixedUpdate()
@@ -21,7 +26,7 @@ public class TuioDefaultFilter : TuioFilter
         {
             roi = customRoi;
         }
-        else
+        else if(Camera.main != null)
         {
             roi.width = Camera.main.pixelWidth;
             roi.height = Camera.main.pixelHeight;
