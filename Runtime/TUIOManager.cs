@@ -159,23 +159,46 @@ public class TUIOManager : MonoBehaviour, TuioListener
             buffer.Value.Update();
         }
 
-        TouchFps = (float)tuio_buffer[TuioType.TOUCH].FPS;
+        TouchFps =  (float)tuio_buffer[TuioType.TOUCH].FPS;
         ObjectFps = (float)tuio_buffer[TuioType.OBJECT].FPS;
 
         touches.Clear();
         foreach (var key_tuiodata in tuio_buffer[ TuioType.TOUCH] .DataList)
         {
-            TuioContainer tcur = null;
-            if (key_tuiodata.Value.container as TuioCursor != null)
-                tcur = new TuioCursor(key_tuiodata.Value.container as TuioCursor);
-            if (key_tuiodata.Value.container as TuioBlob != null)
-                tcur = new TuioBlob(key_tuiodata.Value.container as TuioBlob);
+            TuioContainer tcon = null;
+            TuioCursor tcur  = key_tuiodata.Value.container as TuioCursor;
+            TuioBlob   tblob = key_tuiodata.Value.container as TuioBlob;
+            if (tcur != null)
+                tcon = new TuioCursor(tcur);
+            if (tblob != null)
+                tcon = tblob = new TuioBlob(tblob);
             foreach (var f in blobFilters)
             {
-                f.Filter(tcur);
+                f.Filter(tcon);
             }
-            touches[(int)key_tuiodata.Key] = ToTouch(tcur, key_tuiodata.Value.phase);
+            touches[(int)key_tuiodata.Key] = ToTouch(tcon, key_tuiodata.Value.phase);
+
+
+            if(tblob!=null)
+            {
+                switch (key_tuiodata.Value.phase)
+                {
+                    case TouchPhase.Began:
+                        AddTuioBlobEvent.Invoke(tblob);
+                        break;
+                    case TouchPhase.Moved:
+                        UpdateTuioBlobEvent.Invoke(tblob);
+                        break;
+                    case TouchPhase.Ended:
+                    default:
+                        RemoveTuioBlobEvent.Invoke(tblob);
+                        break;
+                }
+            }
+
         }
+
+
 
         objects.Clear();
         foreach (var key_tuiodata in tuio_buffer[TuioType.OBJECT].DataList)
@@ -229,8 +252,15 @@ public class TUIOManager : MonoBehaviour, TuioListener
     Dictionary<TuioType, TuioBuffer> tuio_buffer = new Dictionary<TuioType, TuioBuffer>();
       
     [System.Serializable]
-    public class TuioObjectHandler : UnityEvent<ARTag> { };
-    public TuioObjectHandler AddTuioObjectEvent    = new TuioObjectHandler();
-    public TuioObjectHandler UpdateTuioObjectEvent = new TuioObjectHandler();
-    public TuioObjectHandler RemoveTuioObjectEvent = new TuioObjectHandler();
+    public class TuioObjectEvent : UnityEvent<ARTag> { };
+    public TuioObjectEvent AddTuioObjectEvent    = new TuioObjectEvent();
+    public TuioObjectEvent UpdateTuioObjectEvent = new TuioObjectEvent();
+    public TuioObjectEvent RemoveTuioObjectEvent = new TuioObjectEvent();
+
+    [System.Serializable]
+    public class TuioBlobEvent : UnityEvent<TuioBlob> { }
+    public TuioBlobEvent AddTuioBlobEvent;
+    public TuioBlobEvent UpdateTuioBlobEvent;
+    public TuioBlobEvent RemoveTuioBlobEvent;
+
 }

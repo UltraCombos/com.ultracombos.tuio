@@ -17,6 +17,11 @@ public class TUIOManagerEditor : Editor
     SerializedProperty objectFiltersProperty;
     ReorderableList objectFiltersList;
 
+
+    SerializedProperty addTuioBlobEventProperty;
+    SerializedProperty updateTuioBlobEventProperty;
+    SerializedProperty removeTuioBlobEventProperty;
+
     SerializedProperty addTuioObjectEventProperty;
     SerializedProperty updateTuioObjectEventProperty;
     SerializedProperty removeTuioObjectEventProperty;
@@ -37,7 +42,11 @@ public class TUIOManagerEditor : Editor
         objectFiltersList.drawHeaderCallback = DrawHeaderCallback("Object Filters");
         objectFiltersList.drawElementCallback = DrawElementCallback(objectFiltersProperty, manager.objectFilters);
 
-        addTuioObjectEventProperty = serializedObject.FindProperty("AddTuioObjectEvent");
+        addTuioBlobEventProperty = serializedObject.FindProperty("AddTuioBlobEvent");
+        updateTuioBlobEventProperty = serializedObject.FindProperty("UpdateTuioBlobEvent");
+        removeTuioBlobEventProperty = serializedObject.FindProperty("RemoveTuioBlobEvent");
+
+        addTuioObjectEventProperty    = serializedObject.FindProperty("AddTuioObjectEvent");
         updateTuioObjectEventProperty = serializedObject.FindProperty("UpdateTuioObjectEvent");
         removeTuioObjectEventProperty = serializedObject.FindProperty("RemoveTuioObjectEvent");
     }
@@ -56,6 +65,10 @@ public class TUIOManagerEditor : Editor
 
         blobFiltersList.DoLayoutList();
         objectFiltersList.DoLayoutList();
+
+        EditorGUILayout.PropertyField(addTuioBlobEventProperty);
+        EditorGUILayout.PropertyField(updateTuioBlobEventProperty);
+        EditorGUILayout.PropertyField(removeTuioBlobEventProperty);
 
         EditorGUILayout.PropertyField(addTuioObjectEventProperty);
         EditorGUILayout.PropertyField(updateTuioObjectEventProperty);
