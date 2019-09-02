@@ -125,6 +125,7 @@ public class TUIOManager : MonoBehaviour, TuioListener
         result.sessionId = (int)obj.SessionID;
         result.symbolId = (int)obj.SymbolID;
         result.position = new Vector2(tcur.X, tcur.Y);
+        result.angle = obj.Angle;
         return result;
     }
     
