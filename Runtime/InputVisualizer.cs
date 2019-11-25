@@ -24,20 +24,27 @@ public class InputVisualizer : MonoBehaviour
             TouchEvent(p);
     }
 
+    public void ToggleDebug()
+    {
+        debugInput = !debugInput;
+    }
+
     // Use this for initialization
-    void Awake(){
+    void Awake()
+    {
 #if UNITY_EDITOR
-       // debugInput = false;
+        // debugInput = false;
 #endif
     }
 
-	void Start () {
+    void Start()
+    {
         Debug.LogWarning("InputVisualizer is not fully implemented yet!!!!");
         //Cursor.visible = false;
     }
 
-    void Update () 
-	{
+    void Update()
+    {
         if (EventSystem.current == null || EventSystem.current.currentInputModule == null)
             return;
 
@@ -55,7 +62,8 @@ public class InputVisualizer : MonoBehaviour
         }
     }
 
-    void OnGUI(){
+    void OnGUI()
+    {
         if (!debugInput)
             return;
 
@@ -64,17 +72,17 @@ public class InputVisualizer : MonoBehaviour
 
         BaseInput input = EventSystem.current.currentInputModule.input;
 
-        if(input.GetMouseButton(0))
+        if (input.GetMouseButton(0))
         {
             DrawPointer(input.mousePosition);
         }
 
-        for(int i=0; i<input.touchCount; i++)
+        for (int i = 0; i < input.touchCount; i++)
         {
             Touch t = input.GetTouch(i);
             DrawPointer(t.position);
         }
-	}
+    }
 
     void DrawPointer(Vector2 position)
     {
