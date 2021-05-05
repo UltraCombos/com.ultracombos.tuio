@@ -1,13 +1,18 @@
 {
     "name": "com.ultracombos.tuio",
-    "displayName": "TUIO",
-    "version": "1.0.1",
-    "unity": "2018.2",
-    "description": "",
-    "keywords": [],
-    "category": "",
-    "dependencies": {
-    }
+    "version": "1.0.2",
+	"displayName": "TUIO",        
+    "description": "TUIO for Unity",
+	"repository": "https://github.com/UltraCombos/com.ultracombos.tuio.git",
+	"type": "tool",
+	  "publishConfig": {
+		"registry": "http://nas.ultracombos.com:4873"
+	  },
+	"author": {
+		"name": "Ultra Combos Co., Ltd.",
+		"email": "tech@ultracombos.com",
+		"url": "https://ultracombos.com"
+	},
 }
 
 
